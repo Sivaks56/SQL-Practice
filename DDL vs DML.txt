@@ -1,0 +1,24 @@
+2.Explain DDL vs DML, truncate vs delete
+
+
+----------------------------------------------------------------------------------------------------------------------
+   DDL                                              / DML
+----------------------------------------------------------------------------------------------------------------------
+. It is use to store only structure                  . It is use to store only Data 
+. we will use alter to Add column and modify         . we will use update command to update Name in new column
+   which column you want
+. we can use Drop to delete table                     . we can change column name once we stored Data into DML
+
+. we can change file name using remane command        
+
+
+---------------------------------------------------------------------------------------------------------------------
+Truncate                                                / Delete
+--------------------------------------------------------------------------------------------------------------------
+. we will use Truncate to Delete all row without         . we will use Delete to Delete particulor Row or column
+any delay
+. It will delete only records not field                   
+. it will run faster than Delete                         . it will run slower than Truncate
+               
+
+                    
