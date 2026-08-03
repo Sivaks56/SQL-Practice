@@ -184,4 +184,21 @@ select CustomerID,TotalDue,SalesorderID,OrderDate from BN where Row_no = 1 order
 --Consider only orders where TotalDue > 1000. Display only categories whose Total Sales Value is
 --greater than the average category sales. Use CTEs, a subquery and DENSE_RANK().
 
+select * from SalesLT.Product;
+select * from SalesLT.ProductCategory;
+select * from SalesLT.SalesOrderDetail;
+select * from SalesLT.SalesOrderHeader;
+
+with vb as (
+        select dc.ProductCategoryID, dc.Name as categoryname, COUNT(distinct vb.SalesOrderID) as Number_of_Orders, count(distinct Sz.ProductID) as Number_of_Products_Sold,
+		sum(Sz.OrderQty) as Total_Quantity_Sold, sum(Sz.LineTotal) as Total_Sales_Value, avg(Sz.LineTotal) as Average_Sales
+		from SalesLT.ProductCategory dc Join SalesLT.Product bn on dc.ProductCategoryID = bn.ProductCategoryID
+		join SalesLT.SalesOrderDetail Sz on bn.ProductID = Sz.ProductID Join SalesLT.SalesOrderHeader vb on Sz.SalesOrderID = vb.SalesOrderID
+		where TotalDue > 1000
+		Group by dc.ProductCategoryID,dc.Name
+)
+
+select categoryname,Number_of_Orders,Number_of_Products_Sold,Total_Quantity_Sold,Total_Sales_Value,Average_Sales, dense_rank() over (order by Total_Sales_Value desc) as Salesrank from vb
+where Total_Sales_Value > (select avg(Total_Sales_Value) from vb) order by Salesrank
+
 
